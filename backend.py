@@ -267,7 +267,7 @@ def create_qr_code(data, box_size=10, border=4,
     return generator.generate_qr_code(data, fill_color, back_color)
 
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     generator = QRCodeGenerator()
 
     print("Testing text QR code...")
