@@ -2,7 +2,7 @@ import io
 import streamlit as st
 from backend import QRCodeGenerator
 
-# Page configs
+# Page config
 st.set_page_config(
     page_title="QR Code Generator Pro",
     page_icon="⚡",
@@ -350,19 +350,17 @@ with col_left:
             key="text_input",
             label_visibility="collapsed"
         )
-
+        
         st.markdown("### Customize Colors")
         # Color pickers for text QR
         col_fg, col_bg = st.columns(2)
         with col_fg:
-            text_fg_color = st.color_picker(
-                "🎨 QR Color", "#000000", key="text_fg")
+            text_fg_color = st.color_picker("🎨 QR Color", "#000000", key="text_fg")
         with col_bg:
-            text_bg_color = st.color_picker(
-                "🎨 Background", "#FFFFFF", key="text_bg")
-
+            text_bg_color = st.color_picker("🎨 Background", "#FFFFFF", key="text_bg")
+        
         st.markdown("")  # Spacing
-
+        
         # Generate button for text/URL
         if st.button("🚀 GENERATE QR CODE", key="text_btn"):
             if text_input.strip():
@@ -374,63 +372,60 @@ with col_left:
                             fill_color=text_fg_color,
                             back_color=text_bg_color
                         )
-
+                        
                         # Store in session state
                         st.session_state.qr_image = qr_buffer
                         st.session_state.upload_info = None
-                        st.success("✅ *QR code generated successfully!*")
-
+                        st.success("✅ **QR code generated successfully!**")
+                        
                     except Exception as e:
-                        st.error(f"❌ *Error:* {str(e)}")
+                        st.error(f"❌ **Error:** {str(e)}")
             else:
-                st.warning("⚠ *Please enter some text or URL first*")
+                st.warning("⚠️ **Please enter some text or URL first**")
 
     with tab2:
         st.markdown("### Upload Your File")
-        st.caption(
-            "📦 *Supported:* PDF • Images • Videos • Documents • Audio • Archives • And more!")
-
+        st.caption("📦 **Supported:** PDF • Images • Videos • Documents • Audio • Archives • And more!")
+        
         uploaded_file = st.file_uploader(
             "Choose a file to upload",
             type=None,  # Allow all file types
             key="file_uploader",
             label_visibility="collapsed"
         )
-
+        
         if uploaded_file:
             file_size = len(uploaded_file.getvalue()) / 1024
             if file_size > 1024:
                 file_size_display = f"{file_size/1024:.2f} MB"
             else:
                 file_size_display = f"{file_size:.2f} KB"
-
+            
             # Show file icon based on type
             file_ext = uploaded_file.name.split('.')[-1].lower()
             file_icons = {
                 'pdf': '📄', 'doc': '📄', 'docx': '📄', 'txt': '📄',
-                'jpg': '🖼', 'jpeg': '🖼', 'png': '🖼', 'gif': '🖼', 'svg': '🖼',
+                'jpg': '🖼️', 'jpeg': '🖼️', 'png': '🖼️', 'gif': '🖼️', 'svg': '🖼️',
                 'mp4': '🎥', 'avi': '🎥', 'mov': '🎥', 'mkv': '🎥', 'webm': '🎥',
                 'mp3': '🎵', 'wav': '🎵', 'flac': '🎵', 'ogg': '🎵',
                 'zip': '📦', 'rar': '📦', '7z': '📦', 'tar': '📦',
                 'xlsx': '📊', 'xls': '📊', 'csv': '📊',
-                'pptx': '📽', 'ppt': '📽'
+                'pptx': '📽️', 'ppt': '📽️'
             }
             icon = file_icons.get(file_ext, '📎')
-
-            st.success(f"{icon} {uploaded_file.name}** • {file_size_display}")
-
+            
+            st.success(f"**{icon} {uploaded_file.name}** • {file_size_display}")
+        
         st.markdown("### Customize Colors")
         # Color pickers for file QR
         col_fg2, col_bg2 = st.columns(2)
         with col_fg2:
-            file_fg_color = st.color_picker(
-                "🎨 QR Color", "#000000", key="file_fg")
+            file_fg_color = st.color_picker("🎨 QR Color", "#000000", key="file_fg")
         with col_bg2:
-            file_bg_color = st.color_picker(
-                "🎨 Background", "#FFFFFF", key="file_bg")
-
+            file_bg_color = st.color_picker("🎨 Background", "#FFFFFF", key="file_bg")
+        
         st.markdown("")  # Spacing
-
+        
         # Generate button for file
         if st.button("🚀 UPLOAD & GENERATE", key="file_btn"):
             if uploaded_file:
@@ -443,40 +438,39 @@ with col_left:
                             fill_color=file_fg_color,
                             back_color=file_bg_color
                         )
-
+                        
                         # Store in session state
                         st.session_state.qr_image = qr_buffer
                         st.session_state.upload_info = upload_result
-                        st.success("✅ *QR code generated successfully!*")
-
+                        st.success("✅ **QR code generated successfully!**")
+                        
                     except Exception as e:
-                        st.error(f"❌ *Upload failed:* {str(e)}")
+                        st.error(f"❌ **Upload failed:** {str(e)}")
             else:
-                st.warning("⚠ *Please upload a file first*")
+                st.warning("⚠️ **Please upload a file first**")
 
 with col_right:
     st.markdown("### Generated QR Code")
-
+    
     # Display QR code if available
     if st.session_state.qr_image:
         # Display the QR code
         st.image(st.session_state.qr_image, use_container_width=True)
-
+        
         # If this was from a file upload, show upload info
         if st.session_state.upload_info:
-            st.info(
-                f"📡 Hosting Service:** {st.session_state.upload_info['service']}")
-            st.success(f"{st.session_state.upload_info['message']}")
-
-            with st.expander("🔗 *View Direct Link*"):
+            st.info(f"**📡 Hosting Service:** {st.session_state.upload_info['service']}")
+            st.success(f"**{st.session_state.upload_info['message']}**")
+            
+            with st.expander("🔗 **View Direct Link**"):
                 st.code(st.session_state.upload_info['url'], language=None)
-
+        
         st.markdown("")  # Spacing
-
+        
         # Download button
         st.session_state.qr_image.seek(0)
         st.download_button(
-            label="⬇ DOWNLOAD QR CODE",
+            label="⬇️ DOWNLOAD QR CODE",
             data=st.session_state.qr_image.read(),
             file_name="qr_code.png",
             mime="image/png",
